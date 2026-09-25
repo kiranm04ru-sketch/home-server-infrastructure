@@ -117,12 +117,12 @@ cd home-server-infrastructure
 
 # Create .env file with your credentials (TEMPLATE)
 cat > .env << 'DOTENV'
-POSTGRES_USER=kmistry
-POSTGRES_PASSWORD=[REMOVED]
-POSTGRES_DB=app_db
-PGUSER=kmistry
-PGPASSWORD=[REMOVED]
-PGDATABASE=app_db
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_db
+PGUSER=your_username
+PGPASSWORD=your_password
+PGDATABASE=your_db
 PGHOST=postgres
 DOTENV
 
