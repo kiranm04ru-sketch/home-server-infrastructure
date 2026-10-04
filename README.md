@@ -42,15 +42,15 @@ A comprehensive infrastructure project demonstrating Linux systems administratio
 
 **Full Stack (Phase 4 - Current):**
 
-Internet Request
-↓
-UFW Firewall (deny incoming, allow 22/80/443)
-↓
-Nginx Container (HTTPS:443, reverse proxy, SSL termination)
-↓
-Flask Container (port 5000, auto-restart on failure)
-↓
-PostgreSQL Container (port 5432, persistent volumes)
+```mermaid
+flowchart LR
+    USER(("Browser")) -->|"HTTPS :443"| UFW["UFW — deny by default (22/80/443)"]
+    UFW -->|":80 redirect / :443 TLS"| NGINX["nginx — TLS termination, reverse proxy"]
+    NGINX -->|"flask:5000 (Docker DNS)"| FLASK["flask — task app, auto-restart"]
+    FLASK -->|"postgres:5432 (Docker DNS)"| PG["postgres — app_db, persistent volume"]
+```
+
+**Full diagrams, port-exposure map, and secrets flow:** [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md)
 
 
 **Container Networking:**
@@ -101,10 +101,11 @@ home-server-infrastructure/
 
 ## How to Review
 
-1. **Phase 1-3 Overview:** Read the READMEs in `security/`, `deployment/`, and `setup/` directories
-2. **Phase 1 Scripts:** Review shell scripts in `backups/`, `logs/`, `monitoring/`, `updates/`
-3. **Phase 4 Containerization:** Review `docker-compose.yml`, Dockerfiles in `docker-container-files/`
-4. **Run It Yourself:** Follow the Quick Start below to deploy locally
+1. **Architecture:** Start with [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md) — diagrams, port map, secrets flow
+2. **Phase 1-3 Overview:** Read the docs in `security/` (incl. `firewall-rules.md`), `deployment/`, and `setup/` directories
+3. **Phase 1 Scripts:** Review shell scripts in `backups/`, `logs/`, `monitoring/`, `updates/`
+4. **Phase 4 Containerization:** Review `docker-compose.yml`, Dockerfiles in `docker-container-files/`
+5. **Run It Yourself:** Follow the Quick Start below to deploy locally
 
 ## Quick Start
 
@@ -112,7 +113,7 @@ Prerequisites: Ubuntu 26.04 LTS, Docker, docker-compose installed
 
 ```bash
 # Clone the repository
-git clone https://github.com/kiranm04ru/home-server-infrastructure.git
+git clone https://github.com/kiranm04ru-sketch/home-server-infrastructure.git
 cd home-server-infrastructure
 
 # Create .env file with your credentials (TEMPLATE)
@@ -136,7 +137,7 @@ docker compose up
 
 ## Next Steps
 
-- Phase 5: Kubernetes single-node cluster deployment
+- Phase 5: Kubernetes single-node cluster deployment — plan: [`home-server-infrastructure/docs/phase5-kubernetes-plan.md`](home-server-infrastructure/docs/phase5-kubernetes-plan.md)
 - Phase 6: Prometheus + Grafana monitoring and logging
 - Phase 7: Deploy self-hosted service (Nextcloud, Jellyfin, etc.)
 
@@ -144,4 +145,4 @@ docker compose up
 
 **Tested and working on Ubuntu 26.04 LTS** (also compatible with recent Ubuntu versions 22.04+)
 
-**Repository:** [github.com/kiranm04ru/home-server-infrastructure](https://github.com/kiranm04ru/home-server-infrastructure)
+**Repository:** [github.com/kiranm04ru-sketch/home-server-infrastructure](https://github.com/kiranm04ru-sketch/home-server-infrastructure)
