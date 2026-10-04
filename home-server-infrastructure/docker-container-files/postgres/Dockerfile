@@ -1,8 +1,8 @@
 FROM postgres:16
 
-ENV POSTGRES_USER=kmistry
-ENV POSTGRES_PASSWORD=[REMOVED]
-ENV POSTGRES_DB=app_db
+# Credentials and database name are injected at runtime by docker-compose.yml
+# from the git-ignored .env file — nothing sensitive is baked into the image.
+# init.sql runs only on first initialization of the postgres_data volume.
 
 # Copy initialization script
 COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
