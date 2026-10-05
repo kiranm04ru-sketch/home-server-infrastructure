@@ -50,7 +50,7 @@ flowchart LR
     FLASK -->|"postgres:5432 (Docker DNS)"| PG["postgres — app_db, persistent volume"]
 ```
 
-**Full diagrams, port-exposure map, and secrets flow:** [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md)
+**Full diagrams, port-exposure map, and secrets flow:** [`docs/architecture.md`](docs/architecture.md)
 
 
 **Container Networking:**
@@ -101,7 +101,7 @@ home-server-infrastructure/
 
 ## How to Review
 
-1. **Architecture:** Start with [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md) — diagrams, port map, secrets flow — then the troubleshooting log [`docs/lessons-learned.md`](home-server-infrastructure/docs/lessons-learned.md)
+1. **Architecture:** Start with [`docs/architecture.md`](docs/architecture.md) — diagrams, port map, secrets flow — then the troubleshooting log [`docs/lessons-learned.md`](docs/lessons-learned.md)
 2. **Phase 1-3 Overview:** Read the docs in `security/` (incl. `firewall-rules.md`), `deployment/`, and `setup/` directories
 3. **Phase 1 Scripts:** Review shell scripts in `backups/`, `logs/`, `monitoring/`, `updates/`
 4. **Phase 4 Containerization:** Review `docker-compose.yml`, Dockerfiles in `docker-container-files/`
@@ -142,7 +142,7 @@ docker compose up
 
 ## Next Steps
 
-- Phase 5: Kubernetes single-node cluster deployment — plan: [`home-server-infrastructure/docs/phase5-kubernetes-plan.md`](home-server-infrastructure/docs/phase5-kubernetes-plan.md)
+- Phase 5: Kubernetes single-node cluster deployment — plan: [`docs/phase5-kubernetes-plan.md`](docs/phase5-kubernetes-plan.md)
 - Phase 6: Prometheus + Grafana monitoring and logging
 - Phase 7: Deploy self-hosted service (Nextcloud, Jellyfin, etc.)
 
