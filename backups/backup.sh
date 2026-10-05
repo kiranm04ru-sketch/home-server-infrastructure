@@ -2,6 +2,15 @@
 
 # Backup Script - Automates backups of python projects directory
 # Purpose: Compress and archive python projects, keep 14 days of backups
+#
+# Schedule: user crontab, daily at 02:00 (no sudo required)
+# Output:  ~/backups/backup-YYYY-MM-DD.tar.gz + backup.log
+#
+# Design notes:
+# - SOURCE_DIR contains a space, so every variable use must be quoted —
+#   an unquoted $SOURCE_DIR would split into two words and break tar.
+# - Retention is enforced by file age (find -mtime), not by counting
+#   files, so the rotation self-heals after days the machine was off.
 
 # Configuration - Change these to match your setup
 SOURCE_DIR="$HOME/Desktop/python projects"

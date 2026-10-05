@@ -2,6 +2,18 @@
 
 # System Health Monitor Script - Tracks system resource usage
 # Purpose: Monitor CPU, memory, and disk usage; alert on thresholds
+#
+# Schedule: user crontab, hourly (no sudo required)
+# Output:  ~/backups/system-health.log — one line per run; warnings when
+#          CPU > 80%, memory > 85%, or disk > 90%
+#
+# Design notes:
+# - "CPU" is the 1-minute load average divided by core count — a smooth
+#   proxy, not instantaneous utilization. Good for alerting; iostat/vmstat
+#   give the precise view when digging into an alert.
+# - Requires bc for the percentage arithmetic.
+# - Memory uses the 'available' column (includes reclaimable cache), which
+#   matches what the OOM killer actually cares about.
 
 # Configuration - Alert thresholds (in percentages)
 CPU_THRESHOLD=80

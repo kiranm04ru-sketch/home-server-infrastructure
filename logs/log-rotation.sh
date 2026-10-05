@@ -2,6 +2,17 @@
 
 # Log Rotation Script - Manages system log files to prevent disk space issues
 # Purpose: Rotate, compress, and archive system logs; keep 30 days of history
+#
+# Schedule: daily at 02:30; requires root privileges (runs via sudo)
+# Output:  ~/backups/log-rotation.log — SUDO_USER trick keeps the log in
+#          the real user's home even when invoked via sudo
+#
+# Design notes:
+# - Hand-rolls what logrotate(8) does system-wide: a deliberate learning
+#   exercise covering three specific files.
+# - cp + gzip + truncate instead of mv: rsyslog keeps its open file handle,
+#   so the original file must survive the rotation without a service restart.
+# - The "already rotated today" check makes reruns idempotent no-ops.
 
 # Configuration
 RETENTION_DAYS=30

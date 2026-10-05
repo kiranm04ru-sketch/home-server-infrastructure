@@ -2,6 +2,20 @@
 
 # Automated Updates Script - Keeps system patched with security updates
 # Purpose: Automatically install security updates and log results
+#
+# Schedule: daily at 03:00; requires root privileges (runs via sudo)
+# Output:  ~/backups/auto-update.log — SUDO_USER trick keeps the log in the
+#          real user's home even when invoked via sudo
+#
+# Design notes:
+# - Simulation pass first (apt-get -s) so a quiet day exits before the
+#   system is touched at all.
+# - DEBIAN_FRONTEND=noninteractive + -y keeps an unattended run from
+#   blocking on dpkg prompts.
+# - In production, unattended-upgrades implements this same policy with
+#   less hand-rolled logic; the script exists to understand the steps.
+# - A changed kernel version is reported as a reboot hint rather than
+#   rebooting automatically — the machine gets to choose its moment.
 
 # Get the actual user's home directory (works with sudo)
 if [ -n "$SUDO_USER" ]; then
