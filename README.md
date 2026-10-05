@@ -102,7 +102,7 @@ home-server-infrastructure/
 ## How to Review
 
 1. **Architecture:** Start with [`docs/architecture.md`](docs/architecture.md) — diagrams, port map, secrets flow — then the troubleshooting log [`docs/lessons-learned.md`](docs/lessons-learned.md)
-2. **Phase 1-3 Overview:** Read the docs in `security/` (incl. `firewall-rules.md`), `deployment/`, and `setup/` directories
+2. **Phase 1-3 Overview:** Read the docs in `security/` (incl. `firewall-rules.md`), `deployment/`, and `docker-container-files/setup/` directories
 3. **Phase 1 Scripts:** Review shell scripts in `backups/`, `logs/`, `monitoring/`, `updates/`
 4. **Phase 4 Containerization:** Review `docker-compose.yml`, Dockerfiles in `docker-container-files/`
 5. **Run It Yourself:** Follow the Quick Start below to deploy locally

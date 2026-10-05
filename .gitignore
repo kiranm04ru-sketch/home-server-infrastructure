@@ -50,7 +50,7 @@ docker-compose.override.yml
  
 # Logs
 *.log
-logs/
+logs/*.log
 access.log
 error.log
  
