@@ -101,7 +101,7 @@ home-server-infrastructure/
 
 ## How to Review
 
-1. **Architecture:** Start with [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md) — diagrams, port map, secrets flow
+1. **Architecture:** Start with [`home-server-infrastructure/docs/architecture.md`](home-server-infrastructure/docs/architecture.md) — diagrams, port map, secrets flow — then the troubleshooting log [`docs/lessons-learned.md`](home-server-infrastructure/docs/lessons-learned.md)
 2. **Phase 1-3 Overview:** Read the docs in `security/` (incl. `firewall-rules.md`), `deployment/`, and `setup/` directories
 3. **Phase 1 Scripts:** Review shell scripts in `backups/`, `logs/`, `monitoring/`, `updates/`
 4. **Phase 4 Containerization:** Review `docker-compose.yml`, Dockerfiles in `docker-container-files/`
@@ -126,6 +126,11 @@ PGPASSWORD=your_password
 PGDATABASE=your_db
 PGHOST=postgres
 DOTENV
+
+# NOTE: if your shell exports PGHOST/PGPASSWORD etc. (e.g. an old
+# `export PGPASSWORD=...` in ~/.bashrc), docker compose silently prefers
+# those over .env. Check what the containers will actually receive with
+# `docker compose config | grep PG` — see docs/lessons-learned.md.
 
 # Start all containers
 docker compose up
