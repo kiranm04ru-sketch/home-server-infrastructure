@@ -3,9 +3,10 @@
 # Automated Updates Script - Keeps system patched with security updates
 # Purpose: Automatically install security updates and log results
 #
-# Schedule: daily at 03:00; requires root privileges (runs via sudo)
-# Output:  ~/backups/auto-update.log — SUDO_USER trick keeps the log in the
-#          real user's home even when invoked via sudo
+# Schedule: daily at 03:00, from root's crontab (needs root for apt)
+# Output:  ~/backups/auto-update.log — the crontab line sets SUDO_USER=kiran
+#          so the log lands in the user's home even though the script runs
+#          as root
 #
 # Design notes:
 # - Simulation pass first (apt-get -s) so a quiet day exits before the

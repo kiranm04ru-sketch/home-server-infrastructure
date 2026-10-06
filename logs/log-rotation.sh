@@ -3,9 +3,10 @@
 # Log Rotation Script - Manages system log files to prevent disk space issues
 # Purpose: Rotate, compress, and archive system logs; keep 30 days of history
 #
-# Schedule: daily at 02:30; requires root privileges (runs via sudo)
-# Output:  ~/backups/log-rotation.log — SUDO_USER trick keeps the log in
-#          the real user's home even when invoked via sudo
+# Schedule: daily at 02:30, from root's crontab (needs root for /var/log)
+# Output:  ~/backups/log-rotation.log — the crontab line sets SUDO_USER=kiran
+#          so the log lands in the user's home even though the script runs
+#          as root
 #
 # Design notes:
 # - Hand-rolls what logrotate(8) does system-wide: a deliberate learning
@@ -98,12 +99,14 @@ for logfile in "${LOG_FILES[@]}"; do
     log_message "✓ Rotated: $logfile → $logfile-$ROTATION_DATE.gz ($FILE_SIZE)"
 done
 
-# Delete old rotated logs (older than RETENTION_DAYS)
+# Delete old rotated logs (older than RETENTION_DAYS).
+# -maxdepth 1 keeps find from descending into /var/log subdirectories,
+# which produced "permission denied" noise for unrelated dirs.
 log_message "Cleaning up logs older than $RETENTION_DAYS days"
 
 for logfile in "${LOG_FILES[@]}"; do
     FULL_PATH="$LOG_DIR/$logfile"
-    find "$(dirname "$FULL_PATH")" -name "$(basename "$FULL_PATH")-*.gz" -type f -mtime +$RETENTION_DAYS -delete 2>> "$ROTATION_LOG"
+    find "$(dirname "$FULL_PATH")" -maxdepth 1 -name "$(basename "$FULL_PATH")-*.gz" -type f -mtime +$RETENTION_DAYS -delete 2>> "$ROTATION_LOG"
 done
 
 log_message "✓ Log rotation completed"
